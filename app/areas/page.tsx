@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { AreasDirectory } from "@/components/areas/AreasDirectory";
 import { AreasHero } from "@/components/areas/AreasHero";
 import { SITE } from "@/constants/site";
+import { safeList } from "@/services/modules/common/safe";
 import { getAreas } from "@/services/modules/areas";
 import { getProperties } from "@/services/modules/property";
 
-export const revalidate = 120;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Areas | SK Estate",
@@ -22,8 +23,8 @@ export const metadata: Metadata = {
 
 export default async function AreasPage() {
   const [areas, properties] = await Promise.all([
-    getAreas(),
-    getProperties({ status: "available" }),
+    safeList("getAreas", getAreas),
+    safeList("getProperties", () => getProperties({ status: "available" })),
   ]);
 
   const counts: Record<string, number> = {};

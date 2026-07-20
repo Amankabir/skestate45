@@ -7,10 +7,11 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { EnquiryForm } from "@/components/forms/EnquiryForm";
 import { SITE } from "@/constants/site";
 import { ApiError } from "@/services/api";
+import { safeList } from "@/services/modules/common/safe";
 import { getAreaById } from "@/services/modules/areas";
 import { getProperties } from "@/services/modules/property";
 
-export const revalidate = 120;
+export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
 interface PageProps {
@@ -44,10 +45,12 @@ export default async function AreaDetailPage({ params }: PageProps) {
     throw error;
   }
 
-  const properties = await getProperties({
-    areaId: area.id,
-    status: "available",
-  });
+  const properties = await safeList("getProperties", () =>
+    getProperties({
+      areaId: area.id,
+      status: "available",
+    }),
+  );
 
   return (
     <main id="main-content" className="bg-ivory pb-20">

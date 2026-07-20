@@ -9,12 +9,13 @@ import {
   organizationSchema,
 } from "@/lib/seo";
 import { ApiError } from "@/services/api";
+import { safeList } from "@/services/modules/common/safe";
 import {
   getPropertyById,
   getRelatedProperties,
 } from "@/services/modules/property";
 
-export const revalidate = 120;
+export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
 interface PageProps {
@@ -66,7 +67,9 @@ export default async function PropertyDetailPage({ params }: PageProps) {
     throw error;
   }
 
-  const related = await getRelatedProperties(property, 3);
+  const related = await safeList("getRelatedProperties", () =>
+    getRelatedProperties(property, 3),
+  );
   const pageUrl = `${SITE.url}/properties/${property.id}`;
 
   const schemas = [

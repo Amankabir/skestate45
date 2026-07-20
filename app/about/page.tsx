@@ -6,12 +6,13 @@ import {
   localBusinessSchema,
   organizationSchema,
 } from "@/lib/seo";
+import { safeList } from "@/services/modules/common/safe";
 import { getAmenities } from "@/services/modules/amenities";
 import { getAreas } from "@/services/modules/areas";
 import { getProperties } from "@/services/modules/property";
 import { getPropertyTypes } from "@/services/modules/property-types";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "About | SK Estate",
@@ -26,10 +27,10 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   const [areas, types, amenities, properties] = await Promise.all([
-    getAreas(),
-    getPropertyTypes(),
-    getAmenities(),
-    getProperties({ status: "available" }),
+    safeList("getAreas", getAreas),
+    safeList("getPropertyTypes", getPropertyTypes),
+    safeList("getAmenities", getAmenities),
+    safeList("getProperties", () => getProperties({ status: "available" })),
   ]);
 
   const schemas = [

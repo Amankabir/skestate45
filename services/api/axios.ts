@@ -1,3 +1,5 @@
+import http from "node:http";
+import https from "node:https";
 import axios, { type AxiosInstance, type CreateAxiosDefaults } from "axios";
 import axiosRetry from "axios-retry";
 import { API_BASE_URL, API_TIMEOUT_MS } from "./endpoints";
@@ -5,6 +7,16 @@ import {
   attachRequestInterceptor,
   attachResponseInterceptor,
 } from "./interceptors";
+
+const isServer = typeof window === "undefined";
+
+/** Prefer IPv4 on the server — some hosts have broken/unreachable AAAA paths from Vercel. */
+const serverAgents = isServer
+  ? {
+      httpAgent: new http.Agent({ family: 4, keepAlive: true }),
+      httpsAgent: new https.Agent({ family: 4, keepAlive: true }),
+    }
+  : {};
 
 function createBaseConfig(): CreateAxiosDefaults {
   return {
@@ -14,6 +26,7 @@ function createBaseConfig(): CreateAxiosDefaults {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+    ...serverAgents,
   };
 }
 

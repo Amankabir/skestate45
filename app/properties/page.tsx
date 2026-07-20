@@ -3,12 +3,13 @@ import { Suspense } from "react";
 import { PropertyListing } from "@/components/properties/PropertyListing";
 import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
 import { SITE } from "@/constants/site";
+import { safeList } from "@/services/modules/common/safe";
 import { getAmenities } from "@/services/modules/amenities";
 import { getAreas } from "@/services/modules/areas";
 import { getProperties } from "@/services/modules/property";
 import { getPropertyTypes } from "@/services/modules/property-types";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Commercial Properties for Rent | SK Estate",
@@ -25,10 +26,10 @@ export const metadata: Metadata = {
 
 export default async function PropertiesPage() {
   const [areas, propertyTypes, amenities, available] = await Promise.all([
-    getAreas(),
-    getPropertyTypes(),
-    getAmenities(),
-    getProperties({ status: "available" }),
+    safeList("getAreas", getAreas),
+    safeList("getPropertyTypes", getPropertyTypes),
+    safeList("getAmenities", getAmenities),
+    safeList("getProperties", () => getProperties({ status: "available" })),
   ]);
 
   return (

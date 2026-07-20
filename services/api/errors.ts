@@ -115,7 +115,14 @@ export function toApiError(error: unknown): ApiError {
       return new ApiError(USER_MESSAGES.TIMEOUT, "TIMEOUT");
     }
 
-    if (typeof navigator !== "undefined" && !navigator.onLine) {
+    // Only trust navigator in the browser. In Node (SSR / `next build`),
+    // `navigator` exists but `onLine` is `undefined`, and `!undefined` is true —
+    // which incorrectly labels every network failure as OFFLINE.
+    if (
+      typeof window !== "undefined" &&
+      typeof navigator !== "undefined" &&
+      navigator.onLine === false
+    ) {
       return new ApiError(USER_MESSAGES.OFFLINE, "OFFLINE");
     }
 

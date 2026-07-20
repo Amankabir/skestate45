@@ -1,10 +1,20 @@
-export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ??
-  "https://api.skestate45.com";
+function resolvePublicUrl(
+  value: string | undefined,
+  fallback: string,
+): string {
+  const trimmed = value?.trim().replace(/\/$/, "");
+  return trimmed || fallback;
+}
 
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-  "https://www.skestate45.com";
+export const API_BASE_URL = resolvePublicUrl(
+  process.env.NEXT_PUBLIC_API_BASE_URL,
+  "https://api.skestate45.com",
+);
+
+export const SITE_URL = resolvePublicUrl(
+  process.env.NEXT_PUBLIC_SITE_URL,
+  "https://www.skestate45.com",
+);
 
 export const API_TIMEOUT_MS = 30_000;
 

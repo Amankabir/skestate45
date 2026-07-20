@@ -17,6 +17,7 @@ import {
   organizationSchema,
   websiteSchema,
 } from "@/lib/seo";
+import { safeList } from "@/services/modules/common/safe";
 import { getAmenities } from "@/services/modules/amenities";
 import { getAreas } from "@/services/modules/areas";
 import {
@@ -25,7 +26,8 @@ import {
 } from "@/services/modules/property";
 import { getPropertyTypes } from "@/services/modules/property-types";
 
-export const revalidate = 120;
+/** Fetch at request time — do not block Vercel builds on upstream API. */
+export const dynamic = "force-dynamic";
 
 const HOME_FAQS = [
   {
@@ -44,11 +46,11 @@ const HOME_FAQS = [
 
 export default async function HomePage() {
   const [areas, types, amenities, allProperties, featured] = await Promise.all([
-    getAreas(),
-    getPropertyTypes(),
-    getAmenities(),
-    getProperties({ status: "available" }),
-    getFeaturedProperties(6),
+    safeList("getAreas", getAreas),
+    safeList("getPropertyTypes", getPropertyTypes),
+    safeList("getAmenities", getAmenities),
+    safeList("getProperties", () => getProperties({ status: "available" })),
+    safeList("getFeaturedProperties", () => getFeaturedProperties(6)),
   ]);
 
   const areaCounts: Record<string, number> = {};

@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { AmenitiesDirectory } from "@/components/amenities/AmenitiesDirectory";
 import { AmenitiesHero } from "@/components/amenities/AmenitiesHero";
 import { SITE } from "@/constants/site";
+import { safeList } from "@/services/modules/common/safe";
 import { getAmenities } from "@/services/modules/amenities";
 import { getProperties } from "@/services/modules/property";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Amenities | SK Estate",
@@ -22,8 +23,8 @@ export const metadata: Metadata = {
 
 export default async function AmenitiesPage() {
   const [amenities, properties] = await Promise.all([
-    getAmenities(),
-    getProperties({ status: "available" }),
+    safeList("getAmenities", getAmenities),
+    safeList("getProperties", () => getProperties({ status: "available" })),
   ]);
 
   const counts: Record<string, number> = {};
