@@ -2,110 +2,62 @@ import type { NavItem } from "@/types";
 
 export const NAV_ITEMS: NavItem[] = [
   {
-    label: "Residences",
+    label: "Properties",
     href: "/properties",
     children: [
       {
-        label: "Featured Collection",
-        href: "/properties/featured",
-        description: "Hand-selected homes of exceptional character",
+        label: "All available",
+        href: "/properties",
+        description: "Browse every commercial listing",
       },
       {
-        label: "Villas & Estates",
-        href: "/properties/villas",
-        description: "Private grounds and architectural statements",
-      },
-      {
-        label: "Penthouses",
-        href: "/properties/penthouses",
-        description: "Skyline living with curated interiors",
-      },
-      {
-        label: "New Launches",
-        href: "/projects",
-        description: "Exclusive previews before public release",
+        label: "Search & filters",
+        href: "/search",
+        description: "Area, type, budget, and amenities",
       },
     ],
   },
   {
-    label: "Locations",
+    label: "Areas",
     href: "/areas",
     children: [
       {
-        label: "Dwarka",
-        href: "/areas/dwarka",
-        description: "Planned living at Delhi's western gateway",
-      },
-      {
-        label: "Gurugram",
-        href: "/locations/gurugram",
-        description: "Golf Course Road & DLF precincts",
-      },
-      {
-        label: "South Mumbai",
-        href: "/locations/mumbai",
-        description: "Marine Drive to Cuffe Parade",
-      },
-      {
-        label: "All Areas",
+        label: "All areas",
         href: "/areas",
-        description: "Browse every curated city guide",
+        description: "Delhi NCR micro-markets we cover",
       },
     ],
   },
   {
-    label: "Projects",
-    href: "/projects",
-    children: [
-      {
-        label: "Godrej South Estate",
-        href: "/projects/godrej-south-delhi",
-        description: "Luxury residences in Okhla, South Delhi",
-      },
-      {
-        label: "All Projects",
-        href: "/projects",
-        description: "Browse landmark launches",
-      },
-    ],
-  },
-  {
-    label: "Invest",
-    href: "/#investment",
-  },
-  {
-    label: "Journal",
-    href: "/blog",
+    label: "Amenities",
+    href: "/amenities",
   },
   {
     label: "About",
     href: "/about",
+  },
+  {
+    label: "Contact",
+    href: "/contact",
   },
 ];
 
 export const FOOTER_LINKS = {
   company: [
     { label: "Our Story", href: "/about" },
-    { label: "Advisory Team", href: "/about#team" },
-    { label: "Careers", href: "/careers" },
-    { label: "Press", href: "/press" },
+    { label: "Contact", href: "/contact" },
+    { label: "Enquire", href: "/contact#enquiry" },
   ],
   properties: [
-    { label: "Buy", href: "/properties?intent=buy" },
-    { label: "Rent", href: "/properties?intent=rent" },
-    { label: "New Projects", href: "/projects" },
-    { label: "Off-Market", href: "/properties/off-market" },
+    { label: "All properties", href: "/properties" },
+    { label: "Search", href: "/search" },
+    { label: "Amenities", href: "/amenities" },
   ],
   areas: [
-    { label: "Gurugram", href: "/locations/gurugram" },
-    { label: "Mumbai", href: "/locations/mumbai" },
-    { label: "Bengaluru", href: "/locations/bengaluru" },
-    { label: "Goa", href: "/locations/goa" },
+    { label: "Browse areas", href: "/areas" },
   ],
   quick: [
-    { label: "Book a Visit", href: "/contact" },
-    { label: "Download Brochure", href: "/brochure" },
+    { label: "Book a visit", href: "/contact" },
     { label: "FAQs", href: "/#faq" },
-    { label: "Privacy Policy", href: "/privacy" },
   ],
 };

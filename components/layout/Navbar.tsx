@@ -51,7 +51,7 @@ export function Navbar() {
               scrolled || open ? "text-navy-muted" : "text-pearl/70"
             )}
           >
-            Luxury Residences
+            Commercial Spaces
           </span>
         </Link>
 

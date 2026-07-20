@@ -5,7 +5,7 @@ import { PropertyCard } from "@/components/property/PropertyCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { FadeIn } from "@/animations/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import type { Property } from "@/types";
+import type { Property } from "@/services/modules/property";
 
 interface AreaPropertiesProps {
   areaName: string;

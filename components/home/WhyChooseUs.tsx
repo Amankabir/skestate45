@@ -1,11 +1,31 @@
 "use client";
 
+import Image from "next/image";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { WHY_CHOOSE } from "@/constants/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { FadeIn } from "@/animations/Reveal";
+import { HOME_VISUALS } from "@/constants/homeVisuals";
 import { KeyRound, Compass, Sparkles, LineChart } from "lucide-react";
+
+const ITEMS = [
+  {
+    title: "Verified commercial inventory",
+    body: "Every listing syncs from our live CRM — rent, size, amenities, and availability stay current.",
+  },
+  {
+    title: "Micro-market coverage",
+    body: "From Connaught Place to South Delhi, filter by the localities that matter to your business.",
+  },
+  {
+    title: "Transparent leasing terms",
+    body: "See published rent and square footage where available before you enquire.",
+  },
+  {
+    title: "Direct enquiry to our team",
+    body: "Submit a requirement online — advisors receive it with full page context.",
+  },
+];
 
 const ICONS = [KeyRound, Compass, Sparkles, LineChart];
 
@@ -15,7 +35,7 @@ export function WhyChooseUs() {
     target: ref,
     offset: ["start end", "end start"],
   });
-  const lineHeight = useTransform(scrollYProgress, [0.15, 0.85], ["0%", "100%"]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
 
   return (
     <section
@@ -24,43 +44,44 @@ export function WhyChooseUs() {
       aria-labelledby="why-heading"
     >
       <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(184,151,90,0.15),transparent_45%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(184,151,90,0.14),transparent_45%)]"
         aria-hidden
       />
-      <div className="noise-overlay opacity-[0.04]" aria-hidden />
 
-      <div className="container-luxury relative z-[2]">
-        <SectionHeading
-          eyebrow="Why SK Estate"
-          title="An atelier approach to finding home"
-          description="We measure success not in listings closed, but in lives quietly elevated."
-          light
-        />
-
-        <div className="relative mt-16 grid gap-0 lg:grid-cols-[auto_1fr]">
-          <div className="relative mx-auto hidden w-px lg:block" aria-hidden>
-            <div className="absolute inset-0 bg-pearl/10" />
-            <motion.div
-              className="absolute left-0 top-0 w-full origin-top bg-gradient-to-b from-gold to-champagne"
-              style={{ height: lineHeight }}
+      <div className="container-luxury relative z-[2] grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+        <div className="relative hidden overflow-hidden rounded-3xl lg:block">
+          <motion.div className="relative aspect-[4/5]" style={{ y: imageY }}>
+            <Image
+              src={HOME_VISUALS.why}
+              alt="Professional workspace for growing teams"
+              fill
+              sizes="40vw"
+              className="object-cover"
             />
-          </div>
+          </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-t from-navy/50 to-transparent" />
+        </div>
 
-          <ol className="grid gap-6 md:grid-cols-2">
-            {WHY_CHOOSE.map((item, i) => {
-              const Icon = ICONS[i];
+        <div>
+          <SectionHeading
+            eyebrow="Why SK Estate"
+            title="Leasing support built for operators"
+            description="Shortlist furnished offices, retail, and commercial spaces with clear next steps."
+            light
+          />
+
+          <ol className="mt-10 grid gap-4 sm:grid-cols-2">
+            {ITEMS.map((item, i) => {
+              const Icon = ICONS[i]!;
               return (
-                <FadeIn key={item.id} delay={i * 0.12} direction={i % 2 === 0 ? "left" : "right"}>
-                  <li className="glass group relative h-full rounded-2xl border-pearl/10 bg-pearl/[0.06] p-7 transition duration-500 hover:bg-pearl/[0.1]">
-                    <div className="mb-6 flex items-center justify-between">
-                      <span className="font-accent text-4xl text-gold/80">{item.year}</span>
-                      <span className="flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 text-gold transition duration-500 group-hover:rotate-12 group-hover:bg-gold group-hover:text-navy-deep">
-                        <Icon className="h-5 w-5" />
-                      </span>
-                    </div>
-                    <h3 className="font-display text-2xl text-pearl">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-pearl/65 md:text-base">
-                      {item.description}
+                <FadeIn key={item.title} delay={i * 0.08}>
+                  <li className="h-full rounded-2xl border border-pearl/10 bg-pearl/[0.06] p-5 backdrop-blur-sm transition hover:border-gold/40 hover:bg-pearl/[0.1]">
+                    <Icon className="mb-3 h-5 w-5 text-gold" />
+                    <h3 className="font-display text-lg text-pearl">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-pearl/65">
+                      {item.body}
                     </p>
                   </li>
                 </FadeIn>

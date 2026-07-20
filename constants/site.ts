@@ -1,20 +1,22 @@
 export const SITE = {
   name: "SK Estate",
   legalName: "SK Estate Private Limited",
-  tagline: "Residences curated for a rarer life",
+  tagline: "Commercial spaces across Delhi NCR",
   description:
-    "SK Estate is a luxury real estate atelier crafting exceptional homes across India's most coveted addresses. Discover villas, penthouses, and landmark residences with white-glove advisory.",
-  url: "https://www.skestate.com",
+    "SK Estate helps businesses find furnished offices, retail, shops, and commercial spaces across Delhi NCR — with transparent pricing and dedicated leasing support.",
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+    "https://www.skestate45.com",
   locale: "en_IN",
   phone: "+91 98765 43210",
   phoneHref: "tel:+919876543210",
   whatsapp: "https://wa.me/919876543210",
-  email: "concierge@skestate.com",
+  email: "hello@skestate45.com",
   address: {
-    street: "12, Golf Course Road",
-    city: "Gurugram",
-    region: "Haryana",
-    postalCode: "122002",
+    street: "Connaught Place",
+    city: "New Delhi",
+    region: "Delhi",
+    postalCode: "110001",
     country: "IN",
   },
   social: {
@@ -24,20 +26,26 @@ export const SITE = {
     twitter: "https://x.com/skestate",
   },
   keywords: [
-    "luxury real estate India",
-    "premium villas Gurugram",
-    "luxury apartments Mumbai",
-    "penthouse for sale",
-    "SK Estate",
-    "luxury property advisory",
-    "high-end homes Delhi NCR",
-    "investment properties India",
+    "commercial office rent Delhi",
+    "furnished office Connaught Place",
+    "retail space Delhi NCR",
+    "office leasing SK Estate",
+    "shop for rent Delhi",
+    "bareshell office Delhi",
   ],
 } as const;
 
+/** Fallback labels — live counts come from the API on the homepage */
 export const STATS = [
-  { id: "families", label: "Happy Families", value: 4200, suffix: "+" },
-  { id: "projects", label: "Landmark Projects", value: 180, suffix: "+" },
-  { id: "cities", label: "Cities Served", value: 24, suffix: "" },
-  { id: "awards", label: "Industry Awards", value: 47, suffix: "" },
+  { id: "properties", label: "Listed spaces", value: 0, suffix: "+" },
+  { id: "areas", label: "Micro-markets", value: 0, suffix: "" },
+  { id: "types", label: "Property types", value: 0, suffix: "" },
+  { id: "amenities", label: "Amenities", value: 0, suffix: "" },
+] as const;
+
+export const STATS_LABELS = [
+  { id: "properties", label: "Listed spaces" },
+  { id: "areas", label: "Micro-markets" },
+  { id: "types", label: "Property types" },
+  { id: "amenities", label: "Amenity filters" },
 ] as const;

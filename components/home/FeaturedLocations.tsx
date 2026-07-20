@@ -1,77 +1,64 @@
-"use client";
-
-import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
-import { LOCATIONS } from "@/constants/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ClipReveal, FadeIn } from "@/animations/Reveal";
+import { FadeIn } from "@/animations/Reveal";
+import { AreaCard } from "@/components/home/AreaCard";
+import type { Area } from "@/services/modules/areas";
 
-export function FeaturedLocations() {
+interface FeaturedLocationsProps {
+  areas: Area[];
+  counts: Record<string, number>;
+  covers?: Record<string, string>;
+}
+
+export function FeaturedLocations({
+  areas,
+  counts,
+  covers = {},
+}: FeaturedLocationsProps) {
+  const top = [...areas]
+    .map((a) => ({ ...a, count: counts[a.id] ?? 0 }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 6);
+
   return (
     <section
-      className="section-pad relative overflow-hidden gradient-mesh"
-      aria-labelledby="locations-heading"
+      className="relative overflow-hidden bg-ivory pt-[var(--section)] pb-10 md:pb-12"
+      aria-labelledby="areas-heading"
     >
-      <div className="noise-overlay opacity-[0.025]" aria-hidden />
-      <div className="container-luxury relative z-[2]">
-        <SectionHeading
-          eyebrow="Featured Locations"
-          title="Addresses that define desire"
-          description="From Golf Course Road to the Arabian Sea — explore micro-markets where architecture, lifestyle, and long-term value converge."
-        />
+      <div
+        className="pointer-events-none absolute -right-24 top-10 h-72 w-72 rounded-full bg-gold/10 blur-3xl"
+        aria-hidden
+      />
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {LOCATIONS.map((loc, i) => (
-            <FadeIn key={loc.id} delay={i * 0.1} direction="up">
-              <Link
-                href={loc.href}
-                className="group relative block aspect-[3/4] overflow-hidden rounded-2xl"
-              >
-                <ClipReveal delay={0.1 + i * 0.08} className="absolute inset-0">
-                  <Image
-                    src={loc.image}
-                    alt={`${loc.name} luxury residences`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 25vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                  />
-                </ClipReveal>
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/25 to-transparent" />
-                <div className="absolute inset-0 rounded-2xl border border-transparent transition-colors duration-500 group-hover:border-gold/50" />
+      <div className="container-luxury">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <SectionHeading
+            eyebrow="Micro-markets"
+            title="Popular areas"
+            description="Localities with the most available commercial spaces right now."
+          />
+          <Link
+            href="/areas"
+            className="font-ui inline-flex shrink-0 items-center self-start rounded-full border border-navy/15 bg-pearl px-5 py-2.5 text-xs uppercase tracking-[0.16em] text-navy transition hover:border-gold hover:text-gold sm:self-auto"
+          >
+            View all areas →
+          </Link>
+        </div>
 
-                <div className="absolute inset-x-0 bottom-0 p-5">
-                  <p className="font-ui text-[0.65rem] uppercase tracking-[0.2em] text-champagne">
-                    {loc.city}
-                  </p>
-                  <h3 className="font-display mt-1 text-2xl text-pearl">
-                    {loc.name}
-                  </h3>
-                  <p className="mt-2 text-sm text-pearl/70 opacity-0 transition-opacity duration-400 group-hover:opacity-100">
-                    {loc.tagline}
-                  </p>
-                  <div className="mt-4 flex items-center justify-between">
-                    <span className="font-ui text-xs text-pearl/80">
-                      {loc.propertyCount} properties
-                    </span>
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-pearl/15 text-pearl backdrop-blur-md transition-transform duration-400 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:bg-gold group-hover:text-navy-deep">
-                      <ArrowUpRight className="h-4 w-4" />
-                    </span>
-                  </div>
-                </div>
-              </Link>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {top.map((area, i) => (
+            <FadeIn key={area.id} delay={i * 0.05}>
+              <AreaCard
+                id={area.id}
+                name={area.name}
+                count={area.count}
+                cover={covers[area.id]}
+                fallbackIndex={i}
+                badge={i === 0 ? "Most listed" : undefined}
+              />
             </FadeIn>
           ))}
         </div>
-
-        <motion.div
-          className="gold-line mt-16"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-        />
       </div>
     </section>
   );

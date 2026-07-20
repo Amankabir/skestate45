@@ -1,185 +1,113 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  AreaHero,
-  AreaAbout,
-  AreaHighlights,
-  AreaProperties,
-  AreaPriceTrends,
-  AreaInvestment,
-  AreaNearby,
-  AreaBuilders,
-  AreaAmenities,
-  AreaMap,
-  AreaGallery,
-  AreaVideo,
-  AreaTestimonials,
-  AreaBlogs,
-  AreaFAQ,
-  AreaLeadCTA,
-} from "@/components/areas";
-import { getAllAreaSlugs, getAreaBySlug } from "@/lib/areas";
+import { PropertyCard } from "@/components/property/PropertyCard";
+import { Breadcrumb } from "@/components/ui/Pagination";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { EnquiryForm } from "@/components/forms/EnquiryForm";
 import { SITE } from "@/constants/site";
-import {
-  breadcrumbSchema,
-  faqSchema,
-  localBusinessSchema,
-  organizationSchema,
-  placeSchema,
-  realEstateListingSchema,
-} from "@/lib/seo";
+import { ApiError } from "@/services/api";
+import { getAreaById } from "@/services/modules/areas";
+import { getProperties } from "@/services/modules/property";
+
+export const revalidate = 120;
+export const dynamicParams = true;
 
 interface PageProps {
   params: Promise<{ slug: string }>;
-}
-
-export function generateStaticParams() {
-  return getAllAreaSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const area = getAreaBySlug(slug);
-  if (!area) return { title: "Area Not Found" };
-
-  const url = `${SITE.url}/areas/${area.slug}`;
-
-  return {
-    title: area.metaTitle,
-    description: area.metaDescription,
-    keywords: area.keywords,
-    alternates: { canonical: `/areas/${area.slug}` },
-    openGraph: {
-      type: "website",
-      locale: SITE.locale,
-      url,
-      siteName: SITE.name,
-      title: area.metaTitle,
-      description: area.metaDescription,
-      images: [
-        {
-          url: area.heroImage,
-          width: 1200,
-          height: 630,
-          alt: `Luxury property in ${area.name}`,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: area.metaTitle,
-      description: area.metaDescription,
-      images: [area.heroImage],
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
-    },
-  };
+  try {
+    const area = await getAreaById(slug);
+    return {
+      title: `${area.name} Commercial Properties | ${SITE.name}`,
+      description: `Browse available commercial spaces in ${area.name}, Delhi NCR.`,
+      alternates: { canonical: `/areas/${area.id}` },
+    };
+  } catch {
+    return { title: "Area not found" };
+  }
 }
 
-export default async function AreaPage({ params }: PageProps) {
+export default async function AreaDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const area = getAreaBySlug(slug);
-  if (!area) notFound();
 
-  const pageUrl = `${SITE.url}/areas/${area.slug}`;
+  let area;
+  try {
+    area = await getAreaById(slug);
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 404) notFound();
+    throw error;
+  }
 
-  const schemas = [
-    organizationSchema(),
-    localBusinessSchema(),
-    placeSchema({
-      name: area.name,
-      description: area.metaDescription,
-      url: pageUrl,
-      image: area.heroImage,
-      city: area.city,
-      state: area.state,
-      lat: area.geo.lat,
-      lng: area.geo.lng,
-    }),
-    realEstateListingSchema({
-      name: area.name,
-      description: area.metaDescription,
-      url: pageUrl,
-      image: area.heroImage,
-      propertyCount: area.propertyCount,
-    }),
-    faqSchema(area.faqs),
-    breadcrumbSchema([
-      { name: "Home", url: SITE.url },
-      { name: "Areas", url: `${SITE.url}/areas` },
-      { name: area.name, url: pageUrl },
-    ]),
-  ];
+  const properties = await getProperties({
+    areaId: area.id,
+    status: "available",
+  });
 
   return (
-    <>
-      {schemas.map((schema, i) => (
-        <script
-          key={i}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      ))}
+    <main id="main-content" className="bg-ivory pb-20">
+      <section className="on-dark bg-navy-deep pt-28 pb-14">
+        <div className="container-luxury">
+          <Breadcrumb
+            className="text-pearl/60 [&_span]:text-pearl"
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Areas", href: "/areas" },
+              { label: area.name },
+            ]}
+          />
+          <h1 className="font-display mt-6 text-4xl text-pearl md:text-6xl">
+            {area.name}
+          </h1>
+          <p className="mt-4 text-pearl/75">
+            {properties.length} available{" "}
+            {properties.length === 1 ? "listing" : "listings"} in this area.
+          </p>
+          <Link
+            href={`/properties?areaId=${area.id}`}
+            className="font-ui mt-6 inline-block text-xs uppercase tracking-[0.14em] text-champagne hover:text-gold"
+          >
+            Open in search →
+          </Link>
+        </div>
+      </section>
 
-      <main id="main-content">
-        <AreaHero area={area} />
-        <AreaAbout
-          areaName={area.name}
-          intro={area.aboutIntro}
-          sections={area.aboutSections}
-        />
-        <AreaHighlights areaName={area.name} highlights={area.highlights} />
-        <AreaProperties
-          areaName={area.name}
-          areaSlug={area.slug}
-          properties={area.properties}
-        />
-        <AreaPriceTrends
-          areaName={area.name}
-          trends={area.priceTrends}
-          metrics={area.priceMetrics}
-        />
-        <AreaInvestment
-          areaName={area.name}
-          intro={area.investmentIntro}
-          points={area.investmentPoints}
-        />
-        <AreaNearby areas={area.nearbyAreas} />
-        <AreaBuilders areaName={area.name} builders={area.builders} />
-        <AreaAmenities areaName={area.name} amenities={area.amenities} />
-        <AreaMap
-          areaName={area.name}
-          mapQuery={area.mapEmbedQuery}
-          travelTimes={area.travelTimes}
-        />
-        <AreaGallery areaName={area.name} images={area.gallery} />
-        <AreaVideo
-          areaName={area.name}
-          poster={area.videoPoster}
-          videoUrl={area.videoUrl}
-        />
-        <AreaTestimonials
-          areaName={area.name}
-          testimonials={area.testimonials}
-        />
-        <AreaBlogs areaName={area.name} blogs={area.blogs} />
-        <AreaFAQ areaName={area.name} faqs={area.faqs} />
-        <AreaLeadCTA
-          areaName={area.name}
-          areaSlug={area.slug}
-          image={area.heroImage}
-        />
-      </main>
-    </>
+      <section className="container-luxury mt-12 grid gap-10 lg:grid-cols-[1.4fr_0.7fr]">
+        <div>
+          {properties.length === 0 ? (
+            <EmptyState
+              title="No available listings"
+              description="Check back soon or browse nearby areas."
+              action={
+                <Link
+                  href="/properties"
+                  className="font-ui rounded-full bg-navy px-5 py-2.5 text-xs uppercase tracking-[0.14em] text-pearl"
+                >
+                  All properties
+                </Link>
+              }
+            />
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2">
+              {properties.map((p, i) => (
+                <PropertyCard key={p.id} property={p} index={i} />
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <EnquiryForm
+            pageUrl={`${SITE.url}/areas/${area.id}`}
+            title={`Enquire — ${area.name}`}
+            subtitle="Tell us your size and budget for this locality."
+          />
+        </div>
+      </section>
+    </main>
   );
 }

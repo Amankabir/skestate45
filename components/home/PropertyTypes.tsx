@@ -1,62 +1,65 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { PROPERTY_TYPES } from "@/constants/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { FadeIn } from "@/animations/Reveal";
+import { typeVisual } from "@/constants/homeVisuals";
+import type { PropertyTypeEntity } from "@/services/modules/property-types";
+import { ArrowUpRight } from "lucide-react";
 
-export function PropertyTypes() {
+interface PropertyTypesProps {
+  types: PropertyTypeEntity[];
+  counts: Record<string, number>;
+  covers?: Record<string, string>;
+}
+
+export function PropertyTypes({
+  types,
+  counts,
+  covers = {},
+}: PropertyTypesProps) {
   return (
-    <section
-      className="section-pad bg-ivory"
-      aria-labelledby="types-heading"
-    >
+    <section className="section-pad bg-warm-white" aria-labelledby="types-heading">
       <div className="container-luxury">
         <SectionHeading
-          eyebrow="Property Types"
-          title="Every form of exceptional living"
-          description="From sky residences to coastal estates — explore by the life you want to lead."
-          align="center"
-          className="mx-auto"
+          eyebrow="Categories"
+          title="Browse by type"
+          description="Pick the format that fits — then filter live inventory in one click."
         />
 
-        <div className="mt-14 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-          {PROPERTY_TYPES.map((type, i) => (
-            <FadeIn key={type.id} delay={i * 0.06} direction="none">
-              <Link
-                href={type.href}
-                className="group relative block aspect-[4/5] overflow-hidden rounded-2xl md:aspect-[3/4]"
-              >
-                <Image
-                  src={type.image}
-                  alt={type.name}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/85 via-navy-deep/20 to-transparent transition-opacity duration-500" />
-
-                <motion.div
-                  className="absolute inset-0 border-2 border-transparent transition-colors duration-400 group-hover:border-gold/60"
-                  style={{ borderRadius: "1rem" }}
-                />
-
-                <div className="absolute inset-x-0 bottom-0 translate-y-2 p-4 transition-transform duration-500 group-hover:translate-y-0 md:p-5">
-                  <h3 className="font-display text-lg text-pearl md:text-xl">
-                    {type.name}
-                  </h3>
-                  <p className="mt-1 max-h-0 overflow-hidden text-xs text-pearl/70 opacity-0 transition-all duration-500 group-hover:max-h-20 group-hover:opacity-100">
-                    {type.description}
-                  </p>
-                  <p className="font-ui mt-2 text-[0.65rem] uppercase tracking-[0.16em] text-champagne">
-                    {type.count} listings
-                  </p>
-                </div>
-              </Link>
-            </FadeIn>
-          ))}
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {types.map((type, i) => {
+            const image = covers[type.id] || typeVisual(type.name);
+            return (
+              <FadeIn key={type.id} delay={i * 0.04}>
+                <Link
+                  href={`/properties?propertyTypeId=${type.id}`}
+                  className="group relative block overflow-hidden rounded-2xl bg-pearl shadow-[var(--shadow-soft)] transition hover:shadow-[var(--shadow-lift)]"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={image}
+                      alt={type.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                      className="object-cover transition duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/75 via-transparent to-transparent" />
+                    <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-pearl/90 text-navy opacity-0 transition group-hover:opacity-100">
+                      <ArrowUpRight className="h-4 w-4" />
+                    </span>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-display text-xl text-navy transition group-hover:text-gold">
+                      {type.name}
+                    </h3>
+                    <p className="font-ui mt-1.5 text-[0.65rem] uppercase tracking-[0.14em] text-text-muted">
+                      {counts[type.id] ?? 0} listings
+                    </p>
+                  </div>
+                </Link>
+              </FadeIn>
+            );
+          })}
         </div>
       </div>
     </section>

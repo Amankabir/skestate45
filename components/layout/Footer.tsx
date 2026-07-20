@@ -1,8 +1,7 @@
 "use client";
 
-import { FormEvent, useState } from "react";
 import Link from "next/link";
-import { MapPin, Mail, Phone, ArrowRight } from "lucide-react";
+import { MapPin, Mail, Phone } from "lucide-react";
 import { FOOTER_LINKS } from "@/constants/navigation";
 import { SITE } from "@/constants/site";
 
@@ -41,16 +40,6 @@ function XIcon({ className }: { className?: string }) {
 }
 
 export function Footer() {
-  const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
-
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setSent(true);
-    setEmail("");
-  };
-
   const social = [
     { href: SITE.social.instagram, label: "Instagram", Icon: InstagramIcon },
     { href: SITE.social.linkedin, label: "LinkedIn", Icon: LinkedinIcon },
@@ -60,11 +49,6 @@ export function Footer() {
 
   return (
     <footer className="on-dark relative overflow-hidden bg-navy-deep text-pearl" role="contentinfo">
-      <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(184,151,90,0.12),transparent_50%)]"
-        aria-hidden
-      />
-
       <div className="container-luxury relative z-[2] pt-16 md:pt-20">
         <div className="grid gap-12 border-b border-pearl/10 pb-14 lg:grid-cols-[1.2fr_1.8fr]">
           <div>
@@ -74,8 +58,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-pearl/60">
-              {SITE.tagline}. A luxury real estate atelier for those who seek
-              residences of lasting character.
+              {SITE.tagline}. {SITE.description}
             </p>
 
             <div className="mt-8 space-y-3 text-sm text-pearl/70">
@@ -133,7 +116,7 @@ export function Footer() {
                 </p>
                 <ul className="mt-4 space-y-2.5">
                   {links.map((link) => (
-                    <li key={link.href}>
+                    <li key={`${link.href}-${link.label}`}>
                       <Link
                         href={link.href}
                         className="text-sm text-pearl/65 transition hover:text-gold"
@@ -148,72 +131,13 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="grid gap-10 border-b border-pearl/10 py-12 lg:grid-cols-2">
-          <div>
-            <p className="font-ui text-[0.7rem] uppercase tracking-[0.22em] text-champagne">
-              Newsletter
-            </p>
-            <h3 className="font-display mt-3 text-2xl text-pearl">
-              Private market briefings
-            </h3>
-            <p className="mt-2 max-w-md text-sm text-pearl/55">
-              Monthly insights on launches, off-market opportunities, and
-              corridor intelligence — delivered with discretion.
-            </p>
-            <form onSubmit={onSubmit} className="mt-6 flex max-w-md gap-2">
-              <label className="sr-only" htmlFor="newsletter-email">
-                Email address
-              </label>
-              <input
-                id="newsletter-email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your email"
-                className="font-ui flex-1 rounded-full border border-pearl/20 bg-pearl/5 px-5 py-3 text-sm text-pearl outline-none placeholder:text-pearl/40 focus:border-gold"
-              />
-              <button
-                type="submit"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold text-navy-deep transition hover:bg-gold-light"
-                aria-label="Subscribe"
-              >
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </form>
-            {sent && (
-              <p className="mt-3 text-sm text-emerald-soft" role="status">
-                Thank you — you&apos;re on the list.
-              </p>
-            )}
-          </div>
-
-          <div className="overflow-hidden rounded-2xl border border-pearl/10">
-            <iframe
-              title="SK Estate office location map"
-              src="https://maps.google.com/maps?q=Golf%20Course%20Road%20Gurugram&t=&z=14&ie=UTF8&iwloc=&output=embed"
-              className="h-56 w-full grayscale contrast-125 opacity-80"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-        </div>
-
         <div className="flex flex-col items-center justify-between gap-4 py-8 text-center text-xs text-pearl/40 sm:flex-row sm:text-left">
           <p>
             © {new Date().getFullYear()} {SITE.legalName}. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <Link href="/privacy" className="transition hover:text-gold">
-              Privacy
-            </Link>
-            <Link href="/terms" className="transition hover:text-gold">
-              Terms
-            </Link>
-            <Link href="/cookies" className="transition hover:text-gold">
-              Cookies
-            </Link>
-          </div>
+          <Link href="/contact" className="transition hover:text-gold">
+            Contact & enquiry
+          </Link>
         </div>
       </div>
     </footer>

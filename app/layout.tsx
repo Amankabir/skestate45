@@ -43,7 +43,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.name} | Luxury Real Estate Atelier`,
+    default: `${SITE.name} | Commercial Spaces Delhi NCR`,
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
@@ -59,24 +59,22 @@ export const metadata: Metadata = {
     locale: SITE.locale,
     url: SITE.url,
     siteName: SITE.name,
-    title: `${SITE.name} | Residences Curated for a Rarer Life`,
+    title: `${SITE.name} | ${SITE.tagline}`,
     description: SITE.description,
     images: [
       {
-        url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=630&fit=crop&q=80",
+        url: "/og-image.svg",
         width: 1200,
         height: 630,
-        alt: `${SITE.name} — Luxury Residences`,
+        alt: `${SITE.name} — Commercial Spaces`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE.name} | Luxury Real Estate Atelier`,
+    title: `${SITE.name} | Commercial Spaces`,
     description: SITE.description,
-    images: [
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=630&fit=crop&q=80",
-    ],
+    images: ["/og-image.svg"],
   },
   robots: {
     index: true,

@@ -252,6 +252,22 @@ html.lenis body {
   outline-offset: 3px;
 }
 
+.field-input {
+  width: 100%;
+  border-radius: 0.9rem;
+  border: 1px solid var(--soft-gray);
+  background: var(--warm-white);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 0.925rem;
+  color: var(--navy);
+  outline: none;
+}
+
+.field-input:focus {
+  border-color: var(--gold);
+}
+
 .swiper-pagination-bullet {
   background: var(--champagne) !important;
   opacity: 0.5 !important;
@@ -260,6 +276,15 @@ html.lenis body {
 .swiper-pagination-bullet-active {
   background: var(--gold) !important;
   opacity: 1 !important;
+}
+
+.property-card-swiper .swiper-pagination {
+  bottom: 8px !important;
+}
+
+.property-card-swiper .swiper-pagination-bullet {
+  width: 6px !important;
+  height: 6px !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

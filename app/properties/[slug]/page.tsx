@@ -1,119 +1,107 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import {
-  PropertyDetailHero,
-  PropertyDetailBody,
-  PropertyDetailFAQ,
-  PropertyDetailSimilar,
-  PropertyDetailStickyCTA,
-} from "@/components/property-detail";
-import {
-  getAllPropertySlugs,
-  getPropertyBySlug,
-  getSimilarProperties,
-} from "@/lib/properties";
+import { PropertyDetailView } from "@/components/property-detail/PropertyDetailView";
 import { SITE } from "@/constants/site";
+import { formatSqFeet, PROPERTY_PLACEHOLDER } from "@/lib/format";
 import {
   breadcrumbSchema,
-  faqSchema,
   localBusinessSchema,
   organizationSchema,
 } from "@/lib/seo";
+import { ApiError } from "@/services/api";
+import {
+  getPropertyById,
+  getRelatedProperties,
+} from "@/services/modules/property";
+
+export const revalidate = 120;
+export const dynamicParams = true;
 
 interface PageProps {
   params: Promise<{ slug: string }>;
-}
-
-export function generateStaticParams() {
-  return getAllPropertySlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const property = getPropertyBySlug(slug);
-  if (!property) return { title: "Property Not Found" };
+  try {
+    const property = await getPropertyById(slug);
+    const title = `${property.name} | ${property.areaName} | ${SITE.name}`;
+    const description =
+      property.description ||
+      `${property.propertyTypeName} in ${property.areaName} — ${formatSqFeet(property.sqFeet)}, ${property.rent != null ? `₹${property.rent.toLocaleString("en-IN")}/mo` : "price on request"}.`;
+    const image = property.primaryPhoto || `${SITE.url}/og-image.svg`;
 
-  const url = `${SITE.url}/properties/${property.slug}`;
-
-  return {
-    title: property.metaTitle,
-    description: property.metaDescription,
-    keywords: property.keywords,
-    alternates: { canonical: `/properties/${property.slug}` },
-    openGraph: {
-      type: "website",
-      locale: SITE.locale,
-      url,
-      siteName: SITE.name,
-      title: property.metaTitle,
-      description: property.metaDescription,
-      images: [
-        {
-          url: property.images[0],
-          width: 1200,
-          height: 630,
-          alt: property.title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: property.metaTitle,
-      description: property.metaDescription,
-      images: [property.images[0]],
-    },
-  };
+    return {
+      title,
+      description,
+      alternates: { canonical: `/properties/${property.id}` },
+      openGraph: {
+        title,
+        description,
+        url: `${SITE.url}/properties/${property.id}`,
+        images: [{ url: image, alt: property.name }],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [image],
+      },
+    };
+  } catch {
+    return { title: "Property not found" };
+  }
 }
 
 export default async function PropertyDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const property = getPropertyBySlug(slug);
-  if (!property) notFound();
 
-  const similar = getSimilarProperties(slug);
-  const pageUrl = `${SITE.url}/properties/${property.slug}`;
+  let property;
+  try {
+    property = await getPropertyById(slug);
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 404) notFound();
+    throw error;
+  }
+
+  const related = await getRelatedProperties(property, 3);
+  const pageUrl = `${SITE.url}/properties/${property.id}`;
 
   const schemas = [
     organizationSchema(),
     localBusinessSchema(),
-    faqSchema(property.faqs),
     breadcrumbSchema([
       { name: "Home", url: SITE.url },
       { name: "Properties", url: `${SITE.url}/properties` },
-      { name: property.title, url: pageUrl },
+      { name: property.name, url: pageUrl },
     ]),
     {
       "@context": "https://schema.org",
-      "@type": "Apartment",
-      name: property.title,
-      description: property.metaDescription,
+      "@type": "RealEstateListing",
+      name: property.name,
+      description: property.description,
       url: pageUrl,
-      image: property.images,
-      numberOfRooms: property.beds,
-      floorSize: {
-        "@type": "QuantitativeValue",
-        value: property.area,
-        unitCode: "FTK",
-      },
+      image: property.photos.length ? property.photos : [PROPERTY_PLACEHOLDER],
       address: {
         "@type": "PostalAddress",
-        addressLocality: property.city,
-        streetAddress: property.location,
+        streetAddress: property.address,
+        addressLocality: property.areaName,
         addressCountry: "IN",
       },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: property.geo.lat,
-        longitude: property.geo.lng,
-      },
-      offers: {
-        "@type": "Offer",
-        priceCurrency: "INR",
-        price: property.price,
-        availability: "https://schema.org/InStock",
-      },
+      ...(property.rent != null
+        ? {
+            offers: {
+              "@type": "Offer",
+              price: property.rent,
+              priceCurrency: "INR",
+              availability: property.isAvailable
+                ? "https://schema.org/InStock"
+                : "https://schema.org/OutOfStock",
+            },
+          }
+        : {}),
     },
   ];
 
@@ -126,18 +114,10 @@ export default async function PropertyDetailPage({ params }: PageProps) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-
-      <main id="main-content" className="pb-20 md:pb-24">
-        <PropertyDetailHero property={property} />
-        <PropertyDetailBody property={property} />
-        <PropertyDetailFAQ title={property.title} faqs={property.faqs} />
-        <PropertyDetailSimilar items={similar} />
-      </main>
-
-      <PropertyDetailStickyCTA
-        title={property.title}
-        slug={property.slug}
-        priceLabel={property.priceLabel}
+      <PropertyDetailView
+        property={property}
+        related={related}
+        pageUrl={pageUrl}
       />
     </>
   );

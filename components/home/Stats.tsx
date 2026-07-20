@@ -1,42 +1,55 @@
-"use client";
-
-import { STATS } from "@/constants/site";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import { FadeIn } from "@/animations/Reveal";
-import { motion } from "framer-motion";
 
-export function Stats() {
+interface StatsProps {
+  propertyCount: number;
+  areaCount: number;
+  typeCount: number;
+  amenityCount: number;
+}
+
+export function Stats({
+  propertyCount,
+  areaCount,
+  typeCount,
+  amenityCount,
+}: StatsProps) {
+  const items = [
+    { label: "Listed spaces", value: propertyCount },
+    { label: "Micro-markets", value: areaCount },
+    { label: "Property types", value: typeCount },
+    { label: "Amenities", value: amenityCount },
+  ];
+
   return (
     <section
-      className="on-dark relative overflow-hidden bg-navy py-20 md:py-24"
+      className="relative overflow-hidden bg-navy py-16 text-pearl md:py-20"
       aria-labelledby="stats-heading"
     >
-      <motion.div
-        className="pointer-events-none absolute inset-0 opacity-30"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(184,151,90,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(184,151,90,0.12) 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-        }}
-        animate={{ backgroundPosition: ["0px 0px", "64px 64px"] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      <div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(184,151,90,0.16),transparent_50%)]"
         aria-hidden
       />
-
       <div className="container-luxury relative z-[2]">
-        <h2 id="stats-heading" className="sr-only">
-          SK Estate in numbers
-        </h2>
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-4">
-          {STATS.map((stat, i) => (
-            <FadeIn key={stat.id} delay={i * 0.1} direction="up">
-              <div className="text-center">
-                <p className="font-display text-4xl text-pearl md:text-5xl lg:text-6xl">
-                  <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+        <SectionHeading
+          eyebrow="Live inventory"
+          title="By the numbers"
+          description="Figures refresh directly from our public catalogue."
+          light
+          align="center"
+          className="mx-auto"
+        />
+
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {items.map((item, i) => (
+            <FadeIn key={item.label} delay={i * 0.08}>
+              <div className="rounded-2xl border border-pearl/10 bg-pearl/[0.05] px-6 py-8 text-center backdrop-blur-sm">
+                <p className="font-display text-4xl md:text-5xl">
+                  <AnimatedCounter end={item.value} />
                 </p>
-                <div className="mx-auto my-4 h-px w-12 bg-gradient-to-r from-transparent via-gold to-transparent" />
-                <p className="font-ui text-[0.7rem] uppercase tracking-[0.22em] text-pearl/55">
-                  {stat.label}
+                <p className="font-ui mt-3 text-xs uppercase tracking-[0.16em] text-pearl/60">
+                  {item.label}
                 </p>
               </div>
             </FadeIn>

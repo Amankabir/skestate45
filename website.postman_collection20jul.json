@@ -1,0 +1,365 @@
+{
+  "info": {
+    "name": "HG API (Website / Public)",
+    "_postman_id": "b7e4d1a2-3c6f-5b8e-a1d0-9f2e7c4b6a3d",
+    "description": "Public APIs for the customer-facing website. No authentication required.\n\n## Setup\n1. Import this file into Postman.\n2. Open collection **Variables** and set `base_url` (default `http://localhost:4000`).\n3. Run **List areas**, **List amenities**, **List property types**, or **List properties** — scripts save ids to collection variables.\n4. Use **Get by ID** requests with saved variables, or run **List properties (with filters)** for search.\n5. Use **Submit enquiry** to post a public contact form (include `pageUrl`).\n\n## Collection variables\n| Variable | Purpose |\n|----------|----------|\n| `base_url` | API base URL |\n| `area_id` | Auto-set from list areas |\n| `amenity_id` | Auto-set from list amenities |\n| `property_type_id` | Auto-set from list property types |\n| `property_id` | Auto-set from list properties |\n\nSee `docs/api/website.md` for full API documentation.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "noauth"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:4000" },
+    { "key": "area_id", "value": "" },
+    { "key": "amenity_id", "value": "" },
+    { "key": "property_type_id", "value": "" },
+    { "key": "property_id", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health check",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": "{{base_url}}/health",
+            "description": "Quick check that the API server is running."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Areas",
+      "description": "Public area lookup for website filter dropdowns.",
+      "item": [
+        {
+          "name": "List areas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.data && json.data.length > 0) {",
+                  "    pm.collectionVariables.set('area_id', json.data[0].id);",
+                  "    pm.test('area_id saved', () => pm.expect(json.data[0].id).to.be.a('string'));",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": "{{base_url}}/api/website/areas",
+            "description": "Returns all areas sorted by name (A–Z). First result id is saved to `area_id`."
+          },
+          "response": []
+        },
+        {
+          "name": "Get area by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": "{{base_url}}/api/website/areas/{{area_id}}",
+            "description": "Get a single area. Run **List areas** first to populate `area_id`."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Amenities",
+      "description": "Public amenity lookup for website filter checkboxes.",
+      "item": [
+        {
+          "name": "List amenities",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.data && json.data.length > 0) {",
+                  "    pm.collectionVariables.set('amenity_id', json.data[0].id);",
+                  "    pm.test('amenity_id saved', () => pm.expect(json.data[0].id).to.be.a('string'));",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": "{{base_url}}/api/website/amenities",
+            "description": "Returns all amenities sorted by name (A–Z). First result id is saved to `amenity_id`."
+          },
+          "response": []
+        },
+        {
+          "name": "Get amenity by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": "{{base_url}}/api/website/amenities/{{amenity_id}}",
+            "description": "Get a single amenity. Run **List amenities** first to populate `amenity_id`."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Property Types",
+      "description": "Public property type lookup for website filter dropdowns.",
+      "item": [
+        {
+          "name": "List property types",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.data && json.data.length > 0) {",
+                  "    pm.collectionVariables.set('property_type_id', json.data[0].id);",
+                  "    pm.test('property_type_id saved', () => pm.expect(json.data[0].id).to.be.a('string'));",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": "{{base_url}}/api/website/property-types",
+            "description": "Returns all property types sorted by name (A–Z). First result id is saved to `property_type_id`."
+          },
+          "response": []
+        },
+        {
+          "name": "Get property type by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": "{{base_url}}/api/website/property-types/{{property_type_id}}",
+            "description": "Get a single property type. Run **List property types** first to populate `property_type_id`."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Properties",
+      "description": "Public property listings for the website. Owner details, rent2/rent3, and internal CRM fields are never returned.",
+      "item": [
+        {
+          "name": "List properties",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  pm.test('Response has data array', () => pm.expect(json.data).to.be.an('array'));",
+                  "  if (json.data && json.data.length > 0) {",
+                  "    pm.collectionVariables.set('property_id', json.data[0].id);",
+                  "    pm.test('property_id saved', () => pm.expect(json.data[0].id).to.be.a('string'));",
+                  "    pm.test('No owner fields in public response', () => {",
+                  "      pm.expect(json.data[0]).to.not.have.property('ownerName');",
+                  "      pm.expect(json.data[0]).to.not.have.property('ownerPhone');",
+                  "    });",
+                  "    pm.test('No rent2/rent3 in public response', () => {",
+                  "      pm.expect(json.data[0]).to.not.have.property('rent2');",
+                  "      pm.expect(json.data[0]).to.not.have.property('rent3');",
+                  "    });",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": "{{base_url}}/api/website/properties",
+            "description": "Returns all properties sorted by name. First result id is saved to `property_id`."
+          },
+          "response": []
+        },
+        {
+          "name": "List properties (with filters)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  pm.test('Response has data array', () => pm.expect(json.data).to.be.an('array'));",
+                  "  if (json.data && json.data.length > 0) {",
+                  "    pm.collectionVariables.set('property_id', json.data[0].id);",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": {
+              "raw": "{{base_url}}/api/website/properties?status=available&areaId={{area_id}}&propertyTypeId={{property_type_id}}&amenityIds={{amenity_id}}&rent1Min=10000&rent1Max=25000&leaseTenureMin=6&leaseTenureMax=24&sqFeetMin=800&sqFeetMax=1200",
+              "host": ["{{base_url}}"],
+              "path": ["api", "website", "properties"],
+              "query": [
+                { "key": "status", "value": "available", "description": "Filter by status (CSV supported)" },
+                { "key": "areaId", "value": "{{area_id}}", "description": "Area ObjectId" },
+                { "key": "propertyTypeId", "value": "{{property_type_id}}", "description": "Property type ObjectId" },
+                { "key": "amenityIds", "value": "{{amenity_id}}", "description": "Comma-separated amenity ObjectIds (must match all)" },
+                { "key": "rent1Min", "value": "10000", "description": "Minimum rent1 (aliases: minRent1, budgetMin)" },
+                { "key": "rent1Max", "value": "25000", "description": "Maximum rent1 (aliases: maxRent1, budgetMax)" },
+                { "key": "leaseTenureMin", "value": "6", "description": "Minimum lease tenure in months" },
+                { "key": "leaseTenureMax", "value": "24", "description": "Maximum lease tenure in months" },
+                { "key": "sqFeetMin", "value": "800", "description": "Minimum square feet" },
+                { "key": "sqFeetMax", "value": "1200", "description": "Maximum square feet" }
+              ]
+            },
+            "description": "Example filtered search. Run list requests for areas, property types, and amenities first to populate variables. Disable unused query params as needed."
+          },
+          "response": []
+        },
+        {
+          "name": "Get property by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  pm.test('Response has data object', () => pm.expect(json.data).to.be.an('object'));",
+                  "  pm.test('No owner fields in public response', () => {",
+                  "    pm.expect(json.data).to.not.have.property('ownerName');",
+                  "    pm.expect(json.data).to.not.have.property('ownerPhone');",
+                  "  });",
+                  "  pm.test('No rent2/rent3 in public response', () => {",
+                  "    pm.expect(json.data).to.not.have.property('rent2');",
+                  "    pm.expect(json.data).to.not.have.property('rent3');",
+                  "  });",
+                  "  pm.test('No internal CRM fields', () => {",
+                  "    pm.expect(json.data).to.not.have.property('notes');",
+                  "    pm.expect(json.data).to.not.have.property('statusHistory');",
+                  "    pm.expect(json.data).to.not.have.property('createdBy');",
+                  "    pm.expect(json.data).to.not.have.property('followUpAt');",
+                  "  });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": "{{base_url}}/api/website/properties/{{property_id}}",
+            "description": "Get a single property detail page payload. Run **List properties** first to populate `property_id`."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Enquiries",
+      "description": "Public enquiry / contact form. Creates a CRM lead with source website and records the page URL.",
+      "item": [
+        {
+          "name": "Submit enquiry",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200 or 201', () => pm.expect([200, 201]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200 || pm.response.code === 201) {",
+                  "  const json = pm.response.json();",
+                  "  pm.test('Response has message', () => pm.expect(json.message).to.be.a('string'));",
+                  "  pm.test('Response has enquiry id', () => pm.expect(json.data.id).to.be.ok);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"phone\": \"9999999999\",\n  \"email\": \"john@example.com\",\n  \"requirement\": \"Interested in viewing this property\",\n  \"propertyId\": \"{{property_id}}\",\n  \"pageUrl\": \"https://skestate45.com/properties/{{property_id}}\",\n  \"referrer\": \"https://www.google.com/\"\n}"
+            },
+            "url": "{{base_url}}/api/website/enquiries",
+            "description": "Submit a public website enquiry. Required: `name`, `phone`, `pageUrl`. Optional: `email`, `requirement`, `propertyId`, `referrer`. Run **List properties** first if using `property_id`."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
