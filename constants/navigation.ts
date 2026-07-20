@@ -43,21 +43,19 @@ export const NAV_ITEMS: NavItem[] = [
 ];
 
 export const FOOTER_LINKS = {
-  company: [
-    { label: "Our Story", href: "/about" },
-    { label: "Contact", href: "/contact" },
-    { label: "Enquire", href: "/contact#enquiry" },
-  ],
-  properties: [
+  explore: [
     { label: "All properties", href: "/properties" },
-    { label: "Search", href: "/search" },
+    { label: "Search & filters", href: "/search" },
+    { label: "Areas", href: "/areas" },
     { label: "Amenities", href: "/amenities" },
+    { label: "Featured spaces", href: "/#featured" },
   ],
-  areas: [
-    { label: "Browse areas", href: "/areas" },
-  ],
-  quick: [
-    { label: "Book a visit", href: "/contact" },
+  company: [
+    { label: "About us", href: "/about" },
+    { label: "Contact", href: "/contact" },
+    { label: "Send enquiry", href: "/contact#enquiry" },
     { label: "FAQs", href: "/#faq" },
+    { label: "Book a visit", href: "/contact" },
   ],
-};
+} as const;
+

@@ -1,13 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { MapPin, Mail, Phone } from "lucide-react";
+import {
+  ArrowRight,
+  MapPin,
+  Mail,
+  MessageCircle,
+  Phone,
+} from "lucide-react";
 import { FOOTER_LINKS } from "@/constants/navigation";
 import { SITE } from "@/constants/site";
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      aria-hidden
+    >
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
@@ -47,45 +60,89 @@ export function Footer() {
     { href: SITE.social.twitter, label: "X", Icon: XIcon },
   ];
 
+  const address = `${SITE.address.street}, ${SITE.address.city}, ${SITE.address.region} ${SITE.address.postalCode}`;
+
   return (
-    <footer className="on-dark relative overflow-hidden bg-navy-deep text-pearl" role="contentinfo">
-      <div className="container-luxury relative z-[2] pt-16 md:pt-20">
-        <div className="grid gap-12 border-b border-pearl/10 pb-14 lg:grid-cols-[1.2fr_1.8fr]">
+    <footer
+      className="on-dark relative overflow-hidden bg-navy-deep text-pearl"
+      role="contentinfo"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_10%_0%,rgba(184,151,90,0.14),transparent_42%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_90%_100%,rgba(26,58,92,0.55),transparent_45%)]"
+        aria-hidden
+      />
+      <div className="noise-overlay" aria-hidden />
+
+      <div className="container-luxury relative z-[2] pt-12 md:pt-14">
+        {/* CTA strip — fills visual weight at top */}
+        <div className="flex flex-col gap-5 rounded-2xl border border-pearl/12 bg-pearl/[0.04] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-7 sm:py-6">
+          <div>
+            <p className="font-ui text-[0.65rem] uppercase tracking-[0.22em] text-champagne">
+              Ready to lease?
+            </p>
+            <p className="font-display mt-1.5 text-xl text-pearl md:text-2xl">
+              Tell us your area, size & budget
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/contact#enquiry"
+              className="btn-gold font-ui inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs uppercase tracking-[0.14em]"
+            >
+              Send enquiry
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+            <a
+              href={SITE.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-ui inline-flex items-center gap-2 rounded-full border border-pearl/25 px-5 py-2.5 text-xs uppercase tracking-[0.14em] text-pearl transition hover:border-gold hover:text-gold"
+            >
+              <MessageCircle className="h-3.5 w-3.5" />
+              WhatsApp
+            </a>
+          </div>
+        </div>
+
+        {/* Main grid — denser 3-column layout */}
+        <div className="mt-10 grid gap-10 border-b border-pearl/10 pb-10 md:mt-12 md:grid-cols-[1.15fr_0.9fr_0.9fr] md:gap-8 lg:gap-12">
           <div>
             <Link href="/" className="inline-block">
-              <span className="font-display text-3xl tracking-tight">
+              <span className="font-display text-2xl tracking-tight md:text-3xl">
                 SK<span className="text-gold"> Estate</span>
               </span>
             </Link>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-pearl/60">
-              {SITE.tagline}. {SITE.description}
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-pearl/60">
+              {SITE.tagline}. Furnished offices, retail, and commercial spaces
+              with transparent pricing.
             </p>
 
-            <div className="mt-8 space-y-3 text-sm text-pearl/70">
-              <p className="flex items-start gap-3">
+            <div className="mt-6 space-y-2.5">
+              <p className="flex items-start gap-3 text-sm text-pearl/70">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                <span>
-                  {SITE.address.street}, {SITE.address.city},{" "}
-                  {SITE.address.region} {SITE.address.postalCode}
-                </span>
+                <span>{address}</span>
               </p>
               <a
                 href={SITE.phoneHref}
-                className="flex items-center gap-3 transition hover:text-gold"
+                className="flex items-center gap-3 text-sm text-pearl/70 transition hover:text-gold"
               >
-                <Phone className="h-4 w-4 text-gold" />
+                <Phone className="h-4 w-4 shrink-0 text-gold" />
                 {SITE.phone}
               </a>
               <a
                 href={`mailto:${SITE.email}`}
-                className="flex items-center gap-3 transition hover:text-gold"
+                className="flex items-center gap-3 text-sm text-pearl/70 transition hover:text-gold"
               >
-                <Mail className="h-4 w-4 text-gold" />
+                <Mail className="h-4 w-4 shrink-0 text-gold" />
                 {SITE.email}
               </a>
             </div>
 
-            <div className="mt-8 flex gap-3">
+            <div className="mt-6 flex gap-2.5">
               {social.map(({ href, label, Icon }) => (
                 <a
                   key={label}
@@ -93,51 +150,81 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-pearl/15 text-pearl/70 transition hover:border-gold hover:text-gold"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-pearl/15 text-pearl/65 transition hover:border-gold hover:text-gold"
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-3.5 w-3.5" />
                 </a>
               ))}
             </div>
           </div>
 
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            {(
-              [
-                ["Company", FOOTER_LINKS.company],
-                ["Properties", FOOTER_LINKS.properties],
-                ["Areas", FOOTER_LINKS.areas],
-                ["Quick Links", FOOTER_LINKS.quick],
-              ] as const
-            ).map(([title, links]) => (
-              <div key={title}>
-                <p className="font-ui text-[0.7rem] uppercase tracking-[0.22em] text-champagne">
-                  {title}
-                </p>
-                <ul className="mt-4 space-y-2.5">
-                  {links.map((link) => (
-                    <li key={`${link.href}-${link.label}`}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-pearl/65 transition hover:text-gold"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div>
+            <p className="font-ui text-[0.7rem] uppercase tracking-[0.22em] text-champagne">
+              Explore
+            </p>
+            <ul className="mt-4 space-y-2.5">
+              {FOOTER_LINKS.explore.map((link) => (
+                <li key={`${link.href}-${link.label}`}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-pearl/70 transition hover:text-gold"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="font-ui text-[0.7rem] uppercase tracking-[0.22em] text-champagne">
+              Company
+            </p>
+            <ul className="mt-4 space-y-2.5">
+              {FOOTER_LINKS.company.map((link) => (
+                <li key={`${link.href}-${link.label}`}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-pearl/70 transition hover:text-gold"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-7 rounded-xl border border-pearl/12 bg-pearl/[0.03] px-4 py-3.5">
+              <p className="font-ui text-[0.6rem] uppercase tracking-[0.18em] text-pearl/45">
+                Leasing desk
+              </p>
+              <a
+                href={SITE.phoneHref}
+                className="mt-1 block text-sm font-medium text-pearl transition hover:text-gold"
+              >
+                {SITE.phone}
+              </a>
+              <p className="mt-1 text-xs text-pearl/45">
+                Weekdays · respond within a few hours
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-4 py-8 text-center text-xs text-pearl/40 sm:flex-row sm:text-left">
+        <div className="flex flex-col items-center justify-between gap-3 py-6 text-center text-xs text-pearl/40 sm:flex-row sm:text-left">
           <p>
             © {new Date().getFullYear()} {SITE.legalName}. All rights reserved.
           </p>
-          <Link href="/contact" className="transition hover:text-gold">
-            Contact & enquiry
-          </Link>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+            <Link href="/properties" className="transition hover:text-gold">
+              Properties
+            </Link>
+            <Link href="/areas" className="transition hover:text-gold">
+              Areas
+            </Link>
+            <Link href="/contact" className="transition hover:text-gold">
+              Contact & enquiry
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
