@@ -1,0 +1,507 @@
+import type { ProjectDetail } from "@/types";
+
+export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
+  "godrej-south-delhi": {
+    slug: "godrej-south-delhi",
+    name: "Godrej South Estate",
+    builder: "Godrej Properties",
+    builderLogoText: "Godrej",
+    location: "Okhla, South Delhi",
+    city: "New Delhi",
+    state: "Delhi",
+    address: "Okhla Phase III, South Delhi",
+    tagline: "A rare address where South Delhi meets quiet luxury",
+    heroImage:
+      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=2400&q=85",
+    videoUrl: "https://www.youtube.com/embed/EngW7tLk6R8?autoplay=1&rel=0",
+    startingPrice: "₹6.5 Cr*",
+    startingPriceValue: 65000000,
+    reraNumber: "DORERA2024000123",
+    possession: "Dec 2028",
+    status: "Under Construction",
+    metaTitle:
+      "Godrej South Estate Okhla | Luxury Apartments in South Delhi",
+    metaDescription:
+      "Explore Godrej South Estate in Okhla, South Delhi. Luxury 3 & 4 BHK residences from ₹6.5 Cr. Floor plans, amenities, payment plans, RERA details and site visit booking with SK Estate.",
+    keywords: [
+      "Godrej South Estate",
+      "Godrej South Delhi",
+      "luxury apartments Okhla",
+      "Godrej Properties Delhi",
+      "3 BHK South Delhi",
+      "4 BHK Okhla",
+      "Godrej South Estate price",
+      "Godrej South Estate floor plan",
+    ],
+    geo: { lat: 28.5355, lng: 77.271 },
+    mapEmbedQuery: "Okhla%20Phase%20III%20South%20Delhi",
+    overview:
+      "Godrej South Estate is a landmark residential development by Godrej Properties in Okhla, South Delhi — crafted for those who seek architectural clarity, generous proportions, and a location that balances centrality with calm. Residences open to landscaped courts, sky lounges, and a clubhouse designed as a private members' retreat.",
+    highlights: [
+      "Prime Okhla address with South Delhi prestige",
+      "Spacious 3 & 4 BHK residences with refined finishes",
+      "Extensive clubhouse and wellness amenities",
+      "Strong connectivity to Nehru Place, Saket & Aerocity",
+      "RERA-registered with transparent timelines",
+      "Designed for end-users and long-horizon investors",
+    ],
+    whyInvest: [
+      "Limited new luxury supply in core South Delhi",
+      "Godrej Properties' delivery track record",
+      "Proximity to business districts and expressways",
+      "Expected rental demand from corporate professionals",
+    ],
+    units: [
+      {
+        id: "u1",
+        type: "3 BHK",
+        beds: 3,
+        carpetArea: 1450,
+        superArea: 1850,
+        price: "₹6.5 Cr*",
+        priceValue: 65000000,
+        availability: "Available",
+      },
+      {
+        id: "u2",
+        type: "3 BHK + Utility",
+        beds: 3,
+        carpetArea: 1620,
+        superArea: 2050,
+        price: "₹7.4 Cr*",
+        priceValue: 74000000,
+        availability: "Limited",
+      },
+      {
+        id: "u3",
+        type: "4 BHK",
+        beds: 4,
+        carpetArea: 2100,
+        superArea: 2650,
+        price: "₹9.8 Cr*",
+        priceValue: 98000000,
+        availability: "Available",
+      },
+      {
+        id: "u4",
+        type: "4 BHK Premium",
+        beds: 4,
+        carpetArea: 2450,
+        superArea: 3100,
+        price: "₹12.2 Cr*",
+        priceValue: 122000000,
+        availability: "Few Left",
+      },
+    ],
+    floorPlans: [
+      {
+        id: "fp1",
+        name: "3 BHK Classic",
+        type: "3 BHK",
+        area: "1,850 sq.ft",
+        image:
+          "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80",
+        pdfUrl: "/brochures/godrej-south-3bhk.pdf",
+      },
+      {
+        id: "fp2",
+        name: "3 BHK + Utility",
+        type: "3 BHK",
+        area: "2,050 sq.ft",
+        image:
+          "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80",
+        pdfUrl: "/brochures/godrej-south-3bhk-utility.pdf",
+      },
+      {
+        id: "fp3",
+        name: "4 BHK Grand",
+        type: "4 BHK",
+        area: "2,650 sq.ft",
+        image:
+          "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80",
+        pdfUrl: "/brochures/godrej-south-4bhk.pdf",
+      },
+      {
+        id: "fp4",
+        name: "4 BHK Premium",
+        type: "4 BHK",
+        area: "3,100 sq.ft",
+        image:
+          "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80",
+        pdfUrl: "/brochures/godrej-south-4bhk-premium.pdf",
+      },
+    ],
+    masterPlanImage:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=2000&q=85",
+    amenities: [
+      { id: "a1", name: "Swimming Pool", icon: "waves" },
+      { id: "a2", name: "Gym & Fitness", icon: "dumbbell" },
+      { id: "a3", name: "Club House", icon: "building" },
+      { id: "a4", name: "Kids Area", icon: "toy" },
+      { id: "a5", name: "Landscaped Garden", icon: "trees" },
+      { id: "a6", name: "Jogging Track", icon: "person" },
+      { id: "a7", name: "EV Charging", icon: "zap" },
+      { id: "a8", name: "Smart Home", icon: "home" },
+      { id: "a9", name: "CCTV Surveillance", icon: "camera" },
+      { id: "a10", name: "24×7 Security", icon: "shield" },
+    ],
+    locationAdvantages: [
+      {
+        id: "l1",
+        title: "Okhla NSIC Metro",
+        description: "Magenta Line access for South & Central Delhi",
+        distance: "1.2 km",
+        time: "5 min",
+      },
+      {
+        id: "l2",
+        title: "Premier Schools",
+        description: "DPS, Modern, and international schools nearby",
+        distance: "2–4 km",
+        time: "10 min",
+      },
+      {
+        id: "l3",
+        title: "Apollo & Fortis",
+        description: "Multi-specialty healthcare within easy reach",
+        distance: "3 km",
+        time: "12 min",
+      },
+      {
+        id: "l4",
+        title: "IGI Airport",
+        description: "Via Ring Road and express corridors",
+        distance: "18 km",
+        time: "35 min",
+      },
+      {
+        id: "l5",
+        title: "Select Citywalk",
+        description: "Saket's premier retail and dining destination",
+        distance: "6 km",
+        time: "18 min",
+      },
+      {
+        id: "l6",
+        title: "Nehru Place",
+        description: "Business hub and commercial district",
+        distance: "4 km",
+        time: "12 min",
+      },
+    ],
+    landmarks: [
+      { name: "Okhla NSIC Metro", type: "Metro", distance: "1.2 km" },
+      { name: "Nehru Place", type: "Business", distance: "4 km" },
+      { name: "Select Citywalk", type: "Mall", distance: "6 km" },
+      { name: "Lotus Temple", type: "Landmark", distance: "5 km" },
+      { name: "Apollo Hospital", type: "Hospital", distance: "3 km" },
+      { name: "IGI Airport", type: "Airport", distance: "18 km" },
+    ],
+    builderProfile: {
+      name: "Godrej Properties",
+      logoText: "Godrej",
+      founded: "1990",
+      experience: "35+ years",
+      completedProjects: 50,
+      ongoingProjects: 28,
+      awards: 200,
+      history:
+        "Godrej Properties is among India's most trusted real estate developers, known for design-led residences, sustainable practices, and on-time delivery across Mumbai, Pune, Bengaluru, NCR, and beyond.",
+      highlights: [
+        "Part of the 125+ year Godrej Group legacy",
+        "Listed on NSE & BSE",
+        "Focus on green building certifications",
+        "Pan-India luxury and premium portfolio",
+      ],
+    },
+    construction: [
+      {
+        id: "c1",
+        phase: "Foundation & Excavation",
+        date: "Q2 2024",
+        status: "completed",
+        progress: 100,
+        description: "Site preparation and foundation works completed.",
+      },
+      {
+        id: "c2",
+        phase: "Structure — Towers A & B",
+        date: "Q4 2025",
+        status: "completed",
+        progress: 100,
+        description: "Superstructure raised to mid-levels across both towers.",
+      },
+      {
+        id: "c3",
+        phase: "Façade & MEP",
+        date: "Q3 2026",
+        status: "current",
+        progress: 62,
+        description: "External cladding, electrical and plumbing in progress.",
+      },
+      {
+        id: "c4",
+        phase: "Interiors & Finishing",
+        date: "Q2 2027",
+        status: "upcoming",
+        progress: 15,
+        description: "Unit fit-outs and common area finishing scheduled.",
+      },
+      {
+        id: "c5",
+        phase: "Possession Handover",
+        date: "Q4 2028",
+        status: "upcoming",
+        progress: 0,
+        description: "Target possession aligned with RERA timeline.",
+      },
+    ],
+    paymentPlans: [
+      {
+        id: "pp1",
+        name: "Construction Linked",
+        downPayment: "10%",
+        description: "Pay as the project progresses — balanced cash flow.",
+        milestones: [
+          { label: "On Booking", percent: "10%" },
+          { label: "On Agreement", percent: "10%" },
+          { label: "During Construction", percent: "70%" },
+          { label: "On Possession", percent: "10%" },
+        ],
+      },
+      {
+        id: "pp2",
+        name: "Flexi Plan",
+        downPayment: "25%",
+        description: "Higher initial commitment with deferred later stages.",
+        milestones: [
+          { label: "On Booking", percent: "25%" },
+          { label: "Within 12 Months", percent: "25%" },
+          { label: "On Possession", percent: "50%" },
+        ],
+        featured: true,
+      },
+      {
+        id: "pp3",
+        name: "Possession Linked",
+        downPayment: "30%",
+        description: "Majority payable closer to handover.",
+        milestones: [
+          { label: "On Booking", percent: "30%" },
+          { label: "On Possession", percent: "70%" },
+        ],
+      },
+    ],
+    investmentMetrics: [
+      {
+        id: "i1",
+        label: "Expected ROI",
+        value: "12–15%",
+        change: "5-Year Outlook",
+        description: "Projected appreciation in South Delhi micro-market",
+      },
+      {
+        id: "i2",
+        label: "Rental Yield",
+        value: "3.2%",
+        change: "Est. Gross",
+        description: "Premium furnished 3BHK rental potential",
+      },
+      {
+        id: "i3",
+        label: "Future Growth",
+        value: "High",
+        change: "Supply Constrained",
+        description: "Limited new luxury inventory in core South Delhi",
+      },
+      {
+        id: "i4",
+        label: "Market Trend",
+        value: "+9.8%",
+        change: "YoY Prices",
+        description: "Okhla–Nehru Place residential corridor",
+      },
+    ],
+    gallery: [
+      {
+        id: "g1",
+        src: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=85",
+        alt: "Godrej South Estate exterior towers",
+        caption: "Tower façade at dusk",
+        type: "image",
+      },
+      {
+        id: "g2",
+        src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=85",
+        alt: "Luxury residence exterior",
+        caption: "Arrival court",
+        type: "image",
+      },
+      {
+        id: "g3",
+        src: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=85",
+        alt: "Luxury living room interior",
+        caption: "Living pavilion",
+        type: "image",
+      },
+      {
+        id: "g4",
+        src: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1600&q=85",
+        alt: "Modern kitchen interior",
+        caption: "Chef's kitchen",
+        type: "image",
+      },
+      {
+        id: "g5",
+        src: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600&q=85",
+        alt: "Bedroom with natural light",
+        caption: "Primary suite",
+        type: "image",
+      },
+      {
+        id: "g6",
+        src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&q=85",
+        alt: "Project aerial view",
+        caption: "Master plan view",
+        type: "image",
+      },
+      {
+        id: "g7",
+        src: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=85",
+        alt: "Video tour thumbnail",
+        caption: "Cinematic tour",
+        type: "video",
+      },
+      {
+        id: "g8",
+        src: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&q=85",
+        alt: "360 degree view",
+        caption: "360° experience",
+        type: "360",
+      },
+    ],
+    similarProjects: [
+      {
+        id: "s1",
+        name: "The Monarch",
+        builder: "DLF Limited",
+        location: "Sector 42, Gurugram",
+        image:
+          "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80",
+        priceFrom: "From ₹4.8 Cr",
+        status: "Pre-Launch",
+        href: "/projects/the-monarch",
+      },
+      {
+        id: "s2",
+        name: "Azure Bay Residences",
+        builder: "Lodha Group",
+        location: "Worli, Mumbai",
+        image:
+          "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80",
+        priceFrom: "From ₹9.2 Cr",
+        status: "Invitation Only",
+        href: "/projects/azure-bay",
+      },
+      {
+        id: "s3",
+        name: "Emerald Park",
+        builder: "Prestige Group",
+        location: "Sarjapur, Bengaluru",
+        image:
+          "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&q=80",
+        priceFrom: "From ₹2.9 Cr",
+        status: "Soft Launch",
+        href: "/projects/emerald-park",
+      },
+      {
+        id: "s4",
+        name: "Casa Atlântica",
+        builder: "Tata Housing",
+        location: "Candolim, Goa",
+        image:
+          "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80",
+        priceFrom: "From ₹3.6 Cr",
+        status: "Coming Soon",
+        href: "/projects/casa-atlantica",
+      },
+    ],
+    testimonials: [
+      {
+        id: "t1",
+        name: "Sanjay Mehta",
+        role: "Early Allottee",
+        quote:
+          "The site visit with SK Estate was precise — unit orientation, payment options, and builder credentials laid out without pressure. We booked a 4BHK the same week.",
+        rating: 5,
+        image:
+          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+        property: "4 BHK Premium",
+      },
+      {
+        id: "t2",
+        name: "Ananya & Rohit Verma",
+        role: "Homebuyers",
+        quote:
+          "South Delhi inventory is scarce. Godrej South Estate felt like the right balance of brand, location, and future value — and the advisory made every document clear.",
+        rating: 5,
+        image:
+          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80",
+        property: "3 BHK + Utility",
+      },
+      {
+        id: "t3",
+        name: "Kabir Singh",
+        role: "NRI Investor",
+        quote:
+          "Remote walkthroughs, RERA checks, and a payment plan that worked with my cash flow abroad. Exceptional end-to-end support.",
+        rating: 5,
+        image:
+          "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&q=80",
+        property: "Investment Unit",
+      },
+    ],
+    faqs: [
+      {
+        id: "f1",
+        question: "What is the starting price of Godrej South Estate?",
+        answer:
+          "Residences at Godrej South Estate start from approximately ₹6.5 Cr* for select 3 BHK configurations. Final pricing varies by floor, view, and unit type. Request the latest price list for accurate figures.",
+      },
+      {
+        id: "f2",
+        question: "What is the RERA number for Godrej South Estate?",
+        answer:
+          "The project is registered under RERA with number DORERA2024000123. Always verify the latest registration status on the official Delhi RERA portal before booking.",
+      },
+      {
+        id: "f3",
+        question: "When is possession expected?",
+        answer:
+          "Target possession is December 2028, subject to RERA timelines and construction progress. SK Estate provides periodic construction updates to registered clients.",
+      },
+      {
+        id: "f4",
+        question: "What unit configurations are available?",
+        answer:
+          "The project offers 3 BHK, 3 BHK + Utility, 4 BHK, and 4 BHK Premium residences with carpet areas ranging from approximately 1,450 to 2,450 sq.ft.",
+      },
+      {
+        id: "f5",
+        question: "Can I book a site visit?",
+        answer:
+          "Yes. You can book a private site visit through SK Estate. Visits are typically arranged within 24–48 hours, including guided walkthroughs of sample units where available.",
+      },
+      {
+        id: "f6",
+        question: "Are home loans available for this project?",
+        answer:
+          "Leading banks and housing finance companies typically finance Godrej Properties projects. Our team can introduce preferred banking partners and assist with documentation.",
+      },
+    ],
+    brochureUrl: "/brochure?project=godrej-south-delhi",
+    priceListUrl: "/price-list?project=godrej-south-delhi",
+  },
+};
+
+export const PROJECT_DETAIL_SLUGS = Object.keys(PROJECT_DETAILS);

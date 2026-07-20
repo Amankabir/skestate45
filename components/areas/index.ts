@@ -1,0 +1,16 @@
+export { AreaHero } from "./AreaHero";
+export { AreaAbout } from "./AreaAbout";
+export { AreaHighlights } from "./AreaHighlights";
+export { AreaProperties } from "./AreaProperties";
+export { AreaPriceTrends } from "./AreaPriceTrends";
+export { AreaInvestment } from "./AreaInvestment";
+export { AreaNearby } from "./AreaNearby";
+export { AreaBuilders } from "./AreaBuilders";
+export { AreaAmenities } from "./AreaAmenities";
+export { AreaMap } from "./AreaMap";
+export { AreaGallery } from "./AreaGallery";
+export { AreaVideo } from "./AreaVideo";
+export { AreaTestimonials } from "./AreaTestimonials";
+export { AreaBlogs } from "./AreaBlogs";
+export { AreaFAQ } from "./AreaFAQ";
+export { AreaLeadCTA } from "./AreaLeadCTA";

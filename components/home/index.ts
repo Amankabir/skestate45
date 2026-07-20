@@ -1,0 +1,15 @@
+export { Hero } from "./Hero";
+export { HeroSearch } from "./HeroSearch";
+export { TrustBar } from "./TrustBar";
+export { FeaturedLocations } from "./FeaturedLocations";
+export { FeaturedProperties } from "./FeaturedProperties";
+export { WhyChooseUs } from "./WhyChooseUs";
+export { PropertyTypes } from "./PropertyTypes";
+export { Projects } from "./Projects";
+export { Investment } from "./Investment";
+export { VideoSection } from "./VideoSection";
+export { Testimonials } from "./Testimonials";
+export { Stats } from "./Stats";
+export { Blogs } from "./Blogs";
+export { FAQ } from "./FAQ";
+export { CTA } from "./CTA";
